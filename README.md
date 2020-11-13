@@ -33,7 +33,7 @@ Always include guard defines to prevent multiple inclusions. Use `#ifndef` and n
 #endif /* BASICTIMERS_H_ */
 ```
 
-Always include a C++ check and include the external header files outside this C++ check. Further, first include any external C standard library files header files, before any custom header files.
+Always include a C++ check and include the external header files outside this C++ check. Further, first include any external C standard library files header files, before any user header files.
 
 ```c
 ...
@@ -44,7 +44,7 @@ Always include a C++ check and include the external header files outside this C+
  extern "C" {
 #endif
 ...
-... // C file header content here and custom #define's
+... // header content and user #define's
 ...
 #ifdef __cplusplus
 }
@@ -75,21 +75,22 @@ Include this in the header file `basictimers.h`, i.e. which implements the custo
 
 ### Sample snippet from a hardware file
 
-Typically all `#defines` is within the C++ check region. Here all relevant base register addresses, with offsets to targeted registers are defined. Comments on every line like so.
+Typically all `#defines` is within the C++ check region. Here all relevant base register addresses, with offsets to targeted registers are defined. The base address must always use the form <register name>_<BASE_ADDR>. Address derived with the offset can use a more descriptive form (all caps) since its actually used in user code. Comments on every line.
 
 ```c
-#define TIM6_BASE_ADDR (0x40001000UL) // TIM6 BASE ADDR
-#define TIM7_BASE_ADDR (0x40001400UL) // TIM7 BASE ADDR
+#define TIM6_CR1_BASE_ADDR (0x40001000UL) // TIM6 base address
+#define TIM7_CR1_BASE_ADDR (0x40001400UL) // TIM7 base address
 
 // TIM6
-#define TIM6_CR1_ADDR (TIM6_BASE_ADDR + 0x0000UL) // offset 0x00
-#define TIM6_SR_ADDR (TIM6_BASE_ADDR + 0x0010UL) // offset 0x10
-#define TIM6_CNT_ADDR (TIM6_BASE_ADDR + 0x0024UL) // offset 0x24
-#define TIM6_PCS_ADDR (TIM6_BASE_ADDR + 0x0028UL) // offset 0x28
-#define TIM6_ARR_ADDR (TIM6_BASE_ADDR + 0x002CUL) // offset 0x2C
+#define TIM6_CR1_ADDR (TIM6_CR1_BASE_ADDR + 0x0000UL) // offset 0x00
+#define TIM6_SR_ADDR (TIM6_CR1_BASE_ADDR + 0x0010UL) // offset 0x10
+#define TIM6_CNT_ADDR (TIM6_CR1_BASE_ADDR + 0x0024UL) // offset 0x24
+#define TIM6_PCS_ADDR (TIM6_CR1_BASE_ADDR + 0x0028UL) // offset 0x28
+#define TIM6_ARR_ADDR (TIM6_CR1_BASE_ADDR + 0x002CUL) // offset 0x2C
 
 //TIM7
-#define TIM7_CR1_ADDR (TIM7_BASE_ADDR + 0x0000UL) // offset 0x00
+#define TIM7_CR1_ADDR (TIM7_CR1_BASE_ADDR + 0x0000UL) // offset 0x00
+#define TIM7_SR_ADDR (TIM7_CR1_BASE_ADDR + 0x0010UL) // offset 0x10
 ...
 ```
 
