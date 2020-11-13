@@ -24,7 +24,7 @@ SysCalls.c          // Wrong
 
 ### Header include files
 
-Always include guard to prevent multiple inclusions with `#ifndef` based on file name (`basictimers.h`) in upper case letters with `_` repacing dot and end all with one `_`. No spaces and all in caps.
+Always include guard defines to prevent multiple inclusions. Use `#ifndef` and name it based on the file name (`basictimers.h`). Use upper case letters only with `_` repacing dots, and end all with one `_`. No spaces and all in caps.
 
 ```c
 #ifndef BASICTIMERS_H_
@@ -33,7 +33,7 @@ Always include guard to prevent multiple inclusions with `#ifndef` based on file
 #endif /* BASICTIMERS_H_ */
 ```
 
-Always include C++ check and include external header files outside this C++ check. Include any external C standard library files header files first, before any custom header files.
+Always include a C++ check and include the external header files outside this C++ check. Further, first include any external C standard library files header files, before any custom header files.
 
 ```c
 ...
@@ -44,7 +44,7 @@ Always include C++ check and include external header files outside this C++ chec
  extern "C" {
 #endif
 ...
-... // c file content here and #define's
+... // C file header content here and custom #define's
 ...
 #ifdef __cplusplus
 }
@@ -53,7 +53,7 @@ Always include C++ check and include external header files outside this C++ chec
 
 ### Always use <stdint.h> defined integer types
 
-Include `<stdint.h>` in the top header file. The compiler will with these types always generate the expected varaible sizes regardless of used micro controller (mcu). Get in the habit to use the same `type` in code, unless required by register requirements or use of a negative integer. Consider integer range, size and decide which `type` to prefer. Being consistent in code helps maintenance and any errors are easier to find. For literals long L, l and unsigned long UL, ul are added after a constant (e.g. `0x0024UL`) and is of 8 bytes length.
+Include `<stdint.h>` in the top header file. The compiler will with these types, always generate the expected variable sizes regardless of used micro controller (mcu). Get in the habit to use the same `type` in code, unless required by register requirements or use of a negative integer. Consider integer range, size and decide which `type` to prefer. Being consistent in code helps maintenance and any errors are easier to find. For literals, long L, l and unsigned long UL, ul are added after a constant (e.g. `0x0024UL`) and is of 8 bytes length.
 | <stdint.h> types | range | size |
 | -----------|-------|------|
 | uint8_t | 0 to 255 | 1 byte |
@@ -65,17 +65,17 @@ Include `<stdint.h>` in the top header file. The compiler will with these types 
 
 ### Hardware register files
 
-Keep all (only) hardware defined register addresses in a separate header file named after the mcu. In this way it easier to port code to another mcu and easier to maintain. Name convention for this header file is `<mcu><"hardware"><name of the implementation header file>`. The code setup of basic timers (TIM6 and TIM7) for a STM32F407 with used register addresses, names the header file as:
+Keep all (and only) hardware defined register addresses in a separate header file named after the mcu. In this way it easier to port code to another mcu and easier to maintain. Name convention for this header file is `<mcu><"hardware"><name of the implementation header file>`. A header file for code to setup the basic timers (TIM6 and TIM7) for a STM32F407 with the used register addresses, could be named:
 
 ```c
 f407hardwarebasictimers.h
 ```
 
-Include this in the header file `basictimers.h`, i.e. which implements the custom functionallity in `basictimers.c` or in `basictimers.cpp`.
+Include this in the header file `basictimers.h`, i.e. which implements the custom functionallity in the `basictimers.c` or in the `basictimers.cpp`.
 
 ### Sample snippet from a hardware file
 
-Typically all `#defines` is within c++ check region. Here all used relevant base register addresses with offsets to targeted registers are defined with comments on every line like so.
+Typically all `#defines` is within the C++ check region. Here all relevant base register addresses, with offsets to targeted registers are defined. Comments on every line like so.
 
 ```c
 #define TIM6_BASE_ADDR (0x40001000UL) // TIM6 BASE ADDR
@@ -93,7 +93,7 @@ Typically all `#defines` is within c++ check region. Here all used relevant base
 ...
 ```
 
-All defines must be in all caps, with `_` used to break long names.
+All `#defines` must be in all caps, with optionally `_` used to break long names.
 
 ### C or C++ in embedded programming
 
@@ -101,7 +101,7 @@ Traditionally, system development for embedded mcu's has been done in pure C. Th
 
 ### Recommended names used for C++ class and functions/methods
 
-If a class is used, it's name is given by the file name (e.g. with `basictimers.h`). The class name and constructor is camel cased:
+If a class is used, it's name is given by the file name (e.g. with `basictimers.h`). The class name and constructor is camel cased, unless part of it is an estblished acronym, e.g. GPIO:
 
 ```c
 class BasicTimers {
@@ -119,7 +119,7 @@ The methods/functions are all in `lowercaseCamelCase()` for best readabilty.
 
 ### Variables
 
-Use all lowercase with an optionally `_` for readabilty in long names.
+Use all lower case with an optionally `_` for readabilty in long names.
 
 ```c
 uint16_t basic_timer = 0;   // OK
@@ -127,7 +127,7 @@ uint16_t basictimer = 0;    // OK also
 uint16_t BasicTimer = 0;    // Wrong
 ```
 
-One exception to the rule above is, if part of name is an established mcu referenced registername, then use all caps for that part **only**. Prepend `p` to pointer variables for clarity. Align the `*` to type, not to the variable name.
+One exception to the above rule is, if part of the name is an established mcu referenced registername, then use all caps for that part **only**. Also, prepend `p` to pointer variables for clarity. Align the `*` to type, not to the variable name.
 
 ```
 int32_t* p_RCC_APB1ENR_tim = (uint32_t*) RCC_TIM_ENABLE_ADDR; // OK
