@@ -75,7 +75,7 @@ Include this in the header file `basictimers.h`, i.e. which implements the custo
 
 ### Sample snippet from a hardware file
 
-Typically all `#defines` is within the C++ check region. Here all relevant base register addresses, with offsets to targeted registers are defined. The base address must always use the form <register name>_<BASE_ADDR>. Address derived with the offset can use a more descriptive form (all caps) since its actually used in user code. Comments on every line.
+Typically all `#defines` is within the C++ check region. Here all relevant base register addresses, with offsets to targeted registers are defined. The base address must always use the form `<register name>_<BASE_ADDR>`. Address derived with the offset can use a more descriptive form (all caps) since its actually used in user code. Comments on every line.
 
 ```c
 #define TIM6_CR1_BASE_ADDR (0x40001000UL) // TIM6 base address
