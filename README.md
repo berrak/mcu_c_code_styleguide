@@ -22,6 +22,8 @@ sys calls.c         // Wrong
 SysCalls.c          // Wrong
 ```
 
+Same as above, applies for directory names also i.e all lower case, to avoid path issues for any buid tool and/or operating system.
+
 ### Header include files
 
 Always include guard defines to prevent multiple inclusions. Use `#ifndef` and name it based on the file name (`basictimers.h`). Use upper case letters only with `_` repacing dots, and end all with one `_`. No spaces and all in caps.
