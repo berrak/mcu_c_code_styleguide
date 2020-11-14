@@ -35,7 +35,7 @@ Always include guard defines to prevent multiple inclusions. Use `#ifndef` and n
 #endif /* BASICTIMERS_H_ */
 ```
 
-Always include a C++ check and include the external header files outside this C++ check. Further, first include any external C standard library files header files, before any user header files.
+Always include a C++ check and include the external header files outside this C++ check. Further, first include any external C standard library files header files, before any user header files. Every `#define`must be within C++ check brackets. 
 
 ```c
 ...
@@ -46,7 +46,7 @@ Always include a C++ check and include the external header files outside this C+
  extern "C" {
 #endif
 ...
-... // header content and user #define's
+... // All user #define's, indented 4 spaces
 ...
 #ifdef __cplusplus
 }
@@ -67,7 +67,7 @@ Include `<stdint.h>` in the top header file. The compiler will with these types,
 
 ### Hardware register files
 
-Keep all (and only) hardware defined register addresses in a separate header file named after the mcu. In this way it easier to port code to another mcu and easier to maintain. Name convention for this header file is `<mcu><"hardware"><name of the implementation header file>`. A header file for code to setup the basic timers (TIM6 and TIM7) for a STM32F407 with the used register addresses, could be named:
+Keep all (and only) hardware defined register addresses and their offsets in a separate header file named after the mcu. In this way it easier to port code to another mcu and easier to maintain. Name convention for this header file is `<mcu><"hardware"><name of the implementation header file>`. A header file for code to setup the basic timers (TIM6 and TIM7) for a STM32F407 with the used register addresses, could be named:
 
 ```c
 f407hardwarebasictimers.h
@@ -80,20 +80,28 @@ Include this in the header file `basictimers.h`, i.e. which implements the custo
 Typically all `#defines` is within the C++ check region. Here all relevant base register addresses, with offsets to targeted registers are defined. The base address must always use the form `<register name>_<BASE_ADDR>`. Address derived with the offset can use a more descriptive form (all caps) since its actually used in user code. Comments on every line.
 
 ```c
-#define TIM6_CR1_BASE_ADDR (0x40001000UL) // TIM6 base address
-#define TIM7_CR1_BASE_ADDR (0x40001400UL) // TIM7 base address
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
-// TIM6
-#define TIM6_CR1_ADDR (TIM6_CR1_BASE_ADDR + 0x0000UL) // offset 0x00
-#define TIM6_SR_ADDR (TIM6_CR1_BASE_ADDR + 0x0010UL) // offset 0x10
-#define TIM6_CNT_ADDR (TIM6_CR1_BASE_ADDR + 0x0024UL) // offset 0x24
-#define TIM6_PCS_ADDR (TIM6_CR1_BASE_ADDR + 0x0028UL) // offset 0x28
-#define TIM6_ARR_ADDR (TIM6_CR1_BASE_ADDR + 0x002CUL) // offset 0x2C
+    #define TIM6_CR1_BASE_ADDR (0x40001000UL) // TIM6 base address
+    #define TIM7_CR1_BASE_ADDR (0x40001400UL) // TIM7 base address
 
-//TIM7
-#define TIM7_CR1_ADDR (TIM7_CR1_BASE_ADDR + 0x0000UL) // offset 0x00
-#define TIM7_SR_ADDR (TIM7_CR1_BASE_ADDR + 0x0010UL) // offset 0x10
-...
+    // TIM6
+    #define TIM6_CR1_ADDR (TIM6_CR1_BASE_ADDR + 0x0000UL) // offset 0x00
+    #define TIM6_SR_ADDR (TIM6_CR1_BASE_ADDR + 0x0010UL) // offset 0x10
+    #define TIM6_CNT_ADDR (TIM6_CR1_BASE_ADDR + 0x0024UL) // offset 0x24
+    #define TIM6_PCS_ADDR (TIM6_CR1_BASE_ADDR + 0x0028UL) // offset 0x28
+    #define TIM6_ARR_ADDR (TIM6_CR1_BASE_ADDR + 0x002CUL) // offset 0x2C
+
+    //TIM7
+    #define TIM7_CR1_ADDR (TIM7_CR1_BASE_ADDR + 0x0000UL) // offset 0x00
+    #define TIM7_SR_ADDR (TIM7_CR1_BASE_ADDR + 0x0010UL) // offset 0x10
+    ...
+
+#ifdef __cplusplus
+}
+#endif
 ```
 
 All `#defines` must be in all caps, with optionally `_` used to break long names.
