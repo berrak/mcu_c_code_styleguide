@@ -13,26 +13,26 @@
 
 ### File naming style
 
-Files are named all in lower case, without any `_`,`-` or whitespace, i.e. all in one world. That ensures that used tools will not have any problem to read file, regardless of host operating system or build tools used.
+Files are named all in lower case, without any `-` or whitespace, i.e. preferable all in one world. That ensures that used tools will not have any problem to read files or paths regardless of host operating system or build tools used. You may use `_` though.
 
 ```
 syscalls.c          // OK
-sys_calls.c         // Wrong
+sys_calls.c         // OK
 sys calls.c         // Wrong
 SysCalls.c          // Wrong
 ```
 
-Same as above, applies for directory names also i.e all lower case, to avoid path issues for any buid tool and/or operating system.
+Same as above, applies for naming file system directories, which are part of the tool chain or source tree, just to avoid building issue. Other directories can be named freely, with `-`, camelcase or all capsas, as long as white space is avoided!
 
 ### Header include files
 
-Always include guard defines to prevent multiple inclusions. Use `#ifndef` and name it based on the file name (`basictimers.h`). Use upper case letters only with `_` repacing dots, and end all with one `_`. No spaces and all in caps.
+Always include guard-defines to prevent multiple inclusions. Use `#ifndef` and name it based on the file name (`basictimers.h`). Use upper case letters only with `_` replace the dot, and begin and end the define with one `_`. No spaces, and all in caps.
 
 ```c
-#ifndef BASICTIMERS_H_
-#define BASICTIMERS_H_
+#ifndef _BASICTIMERS_H_
+#define _BASICTIMERS_H_
 ...
-#endif /* BASICTIMERS_H_ */
+#endif /* _BASICTIMERS_H_ */
 ```
 
 Always include a C++ check and include the external header files outside this C++ check. Further, first include any external C standard library files header files, before any user header files. Every `#define`must be within C++ check brackets. 
@@ -46,7 +46,7 @@ Always include a C++ check and include the external header files outside this C+
  extern "C" {
 #endif
 ...
-... // All user #define's, indented 4 spaces
+... // C code here
 ...
 #ifdef __cplusplus
 }
