@@ -22,7 +22,7 @@ sys calls.c         // Wrong
 SysCalls.c          // Wrong
 ```
 
-Same as above, applies for naming file system directories, which are part of the tool chain or source tree, just to avoid building issue. Other directories can be named freely, with `-`, camelcase or all capsas, as long as white space is avoided!
+Same as above, applies for naming file system directories, which are part of the tool chain or source tree, just to avoid building issue. Other directories can be named freely, with `-`, camelcase or all caps, as long as white space is avoided!
 
 ### Header include files
 
