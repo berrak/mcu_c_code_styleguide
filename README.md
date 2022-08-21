@@ -9,6 +9,7 @@
     - [ Sample snippet from a hardware file ]
     - [ C or C++ in embedded programming ]
     - [ Names used for C++ class and functions/methods ]
+    - [ Structures, enums and typedef ]
     - [ Variable names ]
 
 ### File naming style
@@ -113,7 +114,7 @@ System development for embedded microcontrollers is mostly C-oriented. There are
 
 ### Recommended names used for C++ class and functions/methods
 
-The file name (e.g., with `basictimers.h`) defines the class name. The class name and constructor is camel cased with no lowercase first prefix.
+The file name (e.g., with `basictimers.h`) defines the class name. The class name and constructor is camel cased with no lowercase first prefix. The in-class private methods or functions are all in `lowercaseCamelCase()` for best readability.
 
 ```cpp
 class BasicTimers {
@@ -126,8 +127,28 @@ private:
     ...
 };
 ```
+### Structures, enums and typedef
+Enums and struct are always in `CamelCase`, like `MyProgress` and `ComplicatedProcess`. So append a '`_t`' like shown for typedef of these aggregated constructs.
 
-The in-class private methods or functions are all in `lowercaseCamelCase()` for best readability.
+```cpp
+typedef enum
+{
+    proc_started=0,
+    proc_progressing=1,
+    proc_completed=2
+} MyProgress_t ;
+
+typedef struct 
+{
+    float seed;
+    uint16_t index;
+    MyProgress_t state;
+} ComplicatedProcess_t ;
+```
+Write the declaration of the variable `process_one` with the above typedef.
+```cpp
+ComplicatedProcess_t process_one;
+```
 
 ### Variables
 
