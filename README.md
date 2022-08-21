@@ -114,7 +114,7 @@ System development for embedded microcontrollers is mostly C-oriented. There are
 
 ### Recommended names used for C++ class and functions/methods
 
-The file name (e.g., with `basictimers.h`) defines the class name. The class name and constructor is camel cased with no lowercase first prefix. The in-class private methods or functions are all in `lowercaseCamelCase()` for best readability.
+The file name (e.g., with `basictimers.h`) defines the class name. The class name and constructor is `CamelCased` with no lowercase first prefix. The in-class private methods or functions are all in `lowercaseCamelCase()` for best readability.
 
 ```cpp
 class BasicTimers {
