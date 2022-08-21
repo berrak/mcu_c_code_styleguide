@@ -128,7 +128,7 @@ private:
 };
 ```
 ### Structures, enums and typedef
-Enums and struct are always in `CamelCase`, like `MyProgress` and `ComplicatedProcess`. So append a '`_t`' like shown for typedef of these aggregated constructs.
+Enums and struct are always in `CamelCase`, like `MyProgress` and `ComplicatedProcess`. So append '`_e`' and '`_t`' respectively like shown for typedef of these aggregated constructs.
 
 ```cpp
 typedef enum
@@ -136,13 +136,25 @@ typedef enum
     proc_started=0,
     proc_progressing=1,
     proc_completed=2
-} MyProgress_t ;
+} MyProgress_e ;
+```
+We use enum `class` here for type safety and code readability.
+```cpp
+enum class ValveState : uint8_t {
+    shut,        // defaults to 0
+    engaged,     // defaults to 1
+    disengaged,  // defaults to 2
+    open         // defaults to 3
+};
+```
+Use it like expected `ValveState::engaged`.
 
+```
 typedef struct 
 {
     float seed;
     uint16_t index;
-    MyProgress_t state;
+    MyProgress_e state;
 } ComplicatedProcess_t ;
 ```
 Write the declaration of the variable `process_one` with the above typedef.
