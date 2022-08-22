@@ -8,7 +8,7 @@
     - [ Hardware register files ]
     - [ Sample snippet from a hardware file ]
     - [ C or C++ in embedded programming ]
-    - [ Names used for C++ class and functions/methods ]
+    - [ Names used for C++ classes, functions, and methods ]
     - [ Structures, enums and typedef ]
     - [ Variable names ]
 
@@ -112,9 +112,8 @@ All `#defines` must be in all caps, with optionally '`_`' used to break long nam
 
 System development for embedded microcontrollers is mostly C-oriented. There are pros and cons considering the complexity and additional effort of learning C++ if you are unfamiliar with it, and in the end, this topic may very well be just a personal choice. 
 
-### Recommended names used for C++ class and functions/methods
-
-The file name (e.g., with `basictimers.h`) defines the class name. The class name and constructor is `CamelCased` with no lowercase first prefix. The in-class private methods or functions are all in `lowercaseCamelCase()` for best readability.
+### Recommended names used for C++ classes, functions, and methods
+The file name (e.g., with `basictimers.h`) defines the class name. Avoid any usage of '`_`' in the classes name. The class name and constructor is `CamelCased` with no lowercase first prefix, as are the `public class methods`. The main code `functions` and `private class functions` are all in `lowercaseCamelCase()` to different its purpose and origin.
 
 ```cpp
 class BasicTimers {
