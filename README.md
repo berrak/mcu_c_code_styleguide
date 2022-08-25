@@ -11,6 +11,7 @@
     - [ Names used for C++ classes, functions, and methods ]
     - [ Structures, enums and typedef ]
     - [ Variable names ]
+    - [ Quick style guide summery ]
 
 ### File naming style
 
@@ -20,10 +21,10 @@
 syscalls.c          // OK
 sys_calls.c         // OK
 sys calls.c         // Wrong
-SysCalls.c          // Wrong
+SysCalls.c          // (Wrong): except for an Arduino Library. Use CamelCase like 'SysCalls.cpp', and 'SysCalls.h'.
 ```
 
-Avoid building issues with naming file system directories in the same manner, which are part of the toolchain or source tree. Other directories can be named freely, with hyphens, camel-case, or all caps.
+Avoid building issues with naming file system directories in the same manner, which are part of the toolchain or source tree. To be consistent with any directory name use either `lower case`-style or all `CAPS`, thus no *camel case styles*.
 
 ### Header include files
 
@@ -36,8 +37,7 @@ Always include guard defines to prevent multiple inclusions. For example, use `#
 #endif /* _BASICTIMERS_H_ */
 ```
 
-Always include a C++ check and have the external header files outside this C++ check. Further, include any external C standard library header files before any user header files. Finally, every `#define` must be within C++ check brackets. 
-
+Always include a C++ check and have the external header files outside this C++ check. Further, include any external C standard library header files before any user header files. Finally, every `#define` must be within C++ check brackets. In C++ use `#pragma once` instead of above constructs.
 ```c
 ...
 #include <stdint.h>
@@ -113,18 +113,25 @@ All `#defines` must be in all caps, with optionally '`_`' used to break long nam
 System development for embedded microcontrollers is mostly C-oriented. There are pros and cons considering the complexity and additional effort of learning C++ if you are unfamiliar with it, and in the end, this topic may very well be just a personal choice. 
 
 ### Recommended names used for C++ classes, functions, and methods
-The file name (e.g., with `basictimers.h`) defines the class name. Avoid any usage of '`_`' in the classes name. The class name and constructor is `CamelCased` with no lowercase first prefix, as are the `public class methods`. The main code `functions` and `private class functions` are all in `lowercaseCamelCase()` to different its purpose and origin.
+The file name (e.g., with `basictimers.h`) defines the class name. Avoid any usage of '`_`' in the classes name. The class name and constructor is `CamelCased` with no lowercase first prefix. Use `lowercaseCamelCase()` for all `methods` and `functions`. The instantiated object name is in all `CAPS`.
 
 ```cpp
 class BasicTimers {
 public:
-    // Enable clocks for 'Timer 6 or Timer 7'
-    BasicTimers(uint16_t basic_timer);
+    // Constructor
+    BasicTimers(uint8_t basic_timer);
+
+    resetTimer(uint8_t basic_timer);
 
 private:
-    void enableTimer(uint16_t basic_timer);
+    void enableTimer(uint8_t basic_timer);
     ...
 };
+```
+
+Instantiate an object of this class like this, with the *experimental style*:
+```cpp
+BasicTimers TIMER1(1);
 ```
 ### Structures, enums and typedef
 Enums and struct are always in `CamelCase`, like `MyProgress` and `ComplicatedProcess`. So append '`_e`' and '`_t`' respectively like shown for typedef of these aggregated constructs.
@@ -171,12 +178,12 @@ uint16_t basictimer = 0;    // OK also
 uint16_t BasicTimer = 0;    // Wrong
 
 ```
-Prepended private in-class variable begins with an '`_`' and all lowercase. Also, prepend `p` to pointer variables for clarity. Finally, *align* the '`*`' towards the `data type`, not the `variable name`.
+Prepend `p` to pointer variables for clarity. Finally, *align* the '`*`' towards the `data type`, not the `variable name`.
 ```cpp
 pivate:
 
-    uint16_t  _counter;          // OK
-    uint16_t  another_counter;   // Wrong
+    uint16_t  _counter;          // Not recommended style in later standards.
+    uint16_t  another_counter;   // OK
 
     uint32_t* p_index            // OK
     uint32_t* pindex             // OK
@@ -192,3 +199,9 @@ int32_t* p_RCC_APB1ENR_tim = (uint32_t*) RCC_TIM_ENABLE_ADDR; // OK (also)
 int32_t *pRCC_APB1ENR_TIM = (uint32_t*) RCC_TIM_ENABLE_ADDR; // Wrong
 int32_t *pRCC_APB1ENR_tim = (uint32_t*) RCC_TIM_ENABLE_ADDR; // Wrong
 ```
+## Quick style guide summery
+
+- `CamelCase` for class names, typedef, enum, and Arduino Libraries, and its cpp/h files.
+- `lowerCamelCase`for methods and functions.
+- `lowercase` for variable names, directories, and file names with optionally one `_` for readability.
+- `ÀLLCAPS` register names, defines, directories and (*experimental*) instantiated objects.
